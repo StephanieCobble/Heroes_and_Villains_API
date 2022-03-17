@@ -1,10 +1,10 @@
-# from django.urls import path
-# from rest_framework.urlpatterns import format_suffix_patterns 
-# from .import views
+from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns 
+from .import views
 
-# urlpatterns = [
-#     path('', views.SuperTypeList.as_view()),
-#     #path('<int:pk>/', views.SuperTypeDetail.as_view()),
-# ]
+urlpatterns = [
+    path('', views.SuperType.as_view()),
+    path('<int:pk>/', views.SuperType.as_view()),
+]
 
-# urlpatterns = format_suffix_patterns(urlpatterns)
+urlpatterns = format_suffix_patterns(urlpatterns)
