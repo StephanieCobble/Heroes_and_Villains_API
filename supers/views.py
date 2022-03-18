@@ -12,6 +12,11 @@ from rest_framework import status
 class SuperList(APIView):
     def get(self, request, format=None):
         supers = Super.objects.all()
+        # super_param = Super.objects.filter(super__type=super_param)
+        type_param = self.request.query_params.get('type')
+        if type_param :
+            supers = supers.filter(super_type__type=type_param)
+
         serializer = SuperSerializer(supers, many=True)
         return Response(serializer.data)
 
@@ -52,3 +57,17 @@ class SuperFK(APIView):
         super = Super.objects.filter(super_type=fk)
         serializer = SuperSerializer(super, many=True)
         return Response(serializer.data)
+
+# class SuperListType(APIView):
+#     def get(self, request, fk, format=None):
+#         super_param = request.query_param.get('type')
+#         sort_param = request.query_params.get('sort')
+#         if super_param:
+#             supers = supers.filter(super__type=super_param)
+        
+#         if sort_param:
+#             supers = supers.order_by(sort_param)
+        
+#         serializer = SuperSerializer(super, many=True)
+#         return Response(serializer.data)
+
