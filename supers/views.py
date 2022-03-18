@@ -2,6 +2,7 @@
 # Create your views here.
 
 
+
 from django.http import Http404 
 from rest_framework.views import APIView  
 
@@ -18,7 +19,8 @@ class SuperList(APIView):
         type_param = request.query_params.get('type')
         supers = Super.objects.all()
         
-        custom_response_dictionary = {}
+        custom_response_dictionary = {}        
+
         super_types = SuperType.objects.all()
         if type_param:
             supers = supers.filter(super_type__type=type_param)
@@ -27,15 +29,12 @@ class SuperList(APIView):
 
         else:
             for super_type in super_types:
-                heroes = Super.objects.filter(super_type_id=1)
-                hero_serializer = SuperSerializer(heroes, many=True)
-                villains = Super.objects.filter(super_type_id=2)
-                villain_serializer = SuperSerializer(villains, many=True)
-                custom_response_dictionary = {
-                    "heroes": hero_serializer.data,
-                    "villains": villain_serializer.data
-                }
-                
+                supers = Super.objects.filter(super_type_id=super_type.id)
+                serializer = SuperSerializer(supers, many=True)
+                custom_response_dictionary[super_type.type] = {
+                    "supers": serializer.data,
+                    
+                }    
             return Response(custom_response_dictionary, status=status.HTTP_200_OK)
    
 
