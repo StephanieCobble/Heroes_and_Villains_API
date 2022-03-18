@@ -16,17 +16,6 @@ class SuperTypeList(APIView):
     def get(self, request, format=None):
         super_types = SuperType.objects.all()
         serializer = SuperTypeSerializer(super_types, many=True)
-        
-        custom_response_dictionary = {}
-        for super_type in super_types:
-            supers = Super.objects.filter(super_type_id=super_type.id)
-            super_serializer = SuperSerializer(supers, many=True)
-            custom_response_dictionary[super_type.type] = {
-                "type": super_type.type,
-                "supers": super_serializer.data
-            }
-            return Response(custom_response_dictionary)
-
         return Response(serializer.data)
 
     def post(self, request, format=None):
