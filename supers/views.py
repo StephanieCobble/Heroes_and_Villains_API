@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from super_types.models import SuperType
 from .serializers import SuperSerializer  
-from .models import Super  
+from .models import Power, Super  
 from rest_framework import status  
 
 
@@ -45,10 +45,17 @@ class SuperList(APIView):
 
 
 class SuperDetail(APIView):
+
     def get_object(self, pk):
         try:
             return Super.objects.get(pk=pk)  
         except Super.DoesNotExist:
+            raise Http404
+
+    def get_power(self, pk):
+        try:
+            return Power.objects.get(pk=pk)
+        except Power.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
@@ -67,6 +74,15 @@ class SuperDetail(APIView):
         super = self.get_object(pk)
         super.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, pk, pk2):
+        super = self.get_object(pk)
+        power = self.get_power(pk2)
+        super.powers.add(power)
+        serializer = SuperSerializer(super)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
 
 
 # class SuperFK(APIView):
