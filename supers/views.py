@@ -32,8 +32,7 @@ class SuperList(APIView):
                 supers = Super.objects.filter(super_type_id=super_type.id)
                 serializer = SuperSerializer(supers, many=True)
                 custom_response_dictionary[super_type.type] = {
-                    "supers": serializer.data,
-                    
+                    "supers": serializer.data,    
                 }    
             return Response(custom_response_dictionary, status=status.HTTP_200_OK)
    
@@ -70,10 +69,10 @@ class SuperDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class SuperFK(APIView):
-    def get(self, request, fk, format=None):
-        super = Super.objects.filter(super_type=fk)
-        serializer = SuperSerializer(super, many=True)
-        return Response(serializer.data)
+# class SuperFK(APIView):
+#     def get(self, request, fk, format=None):
+#         super = Super.objects.filter(super_type=fk)
+#         serializer = SuperSerializer(super, many=True)
+#         return Response(serializer.data)
 
 

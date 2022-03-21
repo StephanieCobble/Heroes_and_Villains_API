@@ -5,8 +5,8 @@ from django.http import Http404
 from rest_framework.views import APIView  
 from rest_framework.response import Response
 
-from supers.models import Super
-from supers.serializers import SuperSerializer
+# from supers.models import Super
+# from supers.serializers import SuperSerializer
 from .serializers import SuperTypeSerializer  
 from .models import SuperType  
 from rest_framework import status  
