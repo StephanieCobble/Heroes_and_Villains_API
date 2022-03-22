@@ -117,13 +117,13 @@ class SuperFight(APIView):
         battle = self.hero_vs_villain(super_one, super_two)
         if battle == False:
             if super_one.super_type_id == 1:
-                return Response(f'You must battle against an opponent!')
+                print('You must battle against an opponent!')
             else:
-                return Response(f'You must battle again an opponent!')
+                print('You must battle against an opponent!')
         super_one_count = self.power_count(super_one)
         super_two_count = self.power_count(super_two)
         if super_one_count == super_two_count:
-            custom_battle_response = "Draw!"
+            print("Draw!")
         elif super_one_count > super_two_count:
             win_serializer = SuperSerializer(super_one)
             lose_serializer = SuperSerializer(super_two)
